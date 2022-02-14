@@ -13,7 +13,7 @@ class DatabaseProvider with ChangeNotifier{
   Future<void> init()async{
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     //print("file path $documentsDirectory");
-    String path = join(documentsDirectory.path, 'asset_EasySoftDataFile.db');
+    String path = join(documentsDirectory.path, 'EasySoftDataFile.db');
     if (FileSystemEntity.typeSync(path) == FileSystemEntityType.notFound){
       print("File not found");
       //ByteData data = await rootBundle.load(join('assets/database', 'test.db'));

@@ -4,45 +4,40 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:sqliteschool/provider_data.dart';
 
 class Data{
 
-String batchName;
-int? id;
+
 DatabaseProvider db= DatabaseProvider();
 
-Data({required this.batchName});
-
-factory Data.fromJson(Map<String, dynamic> json){
-  return Data(batchName: json['batchName']);
-
-}
 getDatabase() async{
   await db.init();
 }
 
 
-insertAccount2Group(int AcTypeID, String AcGroupName,BuildContext context) async {
+insertAccount2Group( String cityName) async {
     // AcTypeID=-1;
     // AcGroupName="Pakistan";
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String databasePath = join(appDocDir.path, 
-    'asset_EasySoftDataFile.db');
+    'EasySoftDataFile.db');
     await getDatabase();
-    var db = await databaseFactoryFfi.openDatabase(databasePath, );
+    var db = await databaseFactoryFfi.openDatabase(
+      databasePath,options:OpenDatabaseOptions(singleInstance: false) );
 
-    String maxId = '''
-    select -(IfNull(Max(Abs(AcGroupID)),0)+1) as MaxId from Account2Group"+" where ClientID=$id
+String maxId = '''
+    select -(IfNull(Max(Abs(BranchID)),0)+1) as MaxId from Sch1Branches"+" where ClientID=2
     ''';
-    List list=await db.rawQuery(maxId);
-    var maxID = list[0]['MaxId'].round();
+    List list = await db.rawQuery(maxId);
+  var maxID = list[0]['MaxId'].round();
     String query = '''
-            insert into Account2Group
-            (id,batchName) 
+            insert into Sch1Branches
+            (BranchID, BranchName, Address, ContactNo, LongLat, ClientID, ClientUserID, NetCode, SysCode, UpdatedDate) 
             values
-            ($batchName) 
+            ($maxID, '$cityName', '','','',2,'','','','') 
     ''';
 
     try {
@@ -53,5 +48,15 @@ insertAccount2Group(int AcTypeID, String AcGroupName,BuildContext context) async
 
       print(e.toString());
     }
+  }
+  Future<List> readTableName()async{
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String databasePath = join(appDocDir.path, 'EasySoftDataFile.db');
+    var db = await databaseFactoryFfi.openDatabase(databasePath,options:OpenDatabaseOptions(singleInstance: false));
+    String query = '''
+      SELECT BranchName FROM Sch1Branches
+      ''';
+    List<dynamic> list=await db.rawQuery(query);
+    return list;
   }
 }
