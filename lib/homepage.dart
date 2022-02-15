@@ -35,11 +35,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        title: Text("Home"),
+        centerTitle: true,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            
             Container(
               height: MediaQuery.of(context).size.height*0.3,
               child: ListView.builder(

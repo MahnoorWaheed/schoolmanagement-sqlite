@@ -16,7 +16,24 @@ class _KarachiBranchState extends State<KarachiBranch> {
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
-        title: const Text("Karachi Branch"),
+      //  actions: [
+      //    Row(
+      //      children: [
+      //        ElevatedButton(onPressed: (){
+      //          Navigator.of(context).pop();
+      //        }, child: Text("Home"),)
+      //      ],
+      //    )
+
+      //  ],
+        title: Row(
+          children: [
+            ElevatedButton(onPressed: (){
+               Navigator.of(context).pop();
+             }, child: Text("Home"),),
+             Icon(Icons.arrow_forward_ios, size: 15,),
+          ],
+        ),
         centerTitle: true,
       ),
       body: Column(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sqliteschool/homepage.dart';
-import 'package:sqliteschool/tabbae.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
       
         primarySwatch: Colors.blue,
       ),
-      home: ScrollableTab(),
+      home: HomePage(),
     );
   }
 }
